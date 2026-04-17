@@ -4,6 +4,9 @@
 
 using namespace std;
 
+int playerScore = 0;
+int cpuScore = 0;
+
 class Ball
 {
 public:
@@ -22,13 +25,26 @@ public:
 		y += speed_y;
 
 		if (y + radius >= GetScreenHeight() || y - radius <= 0)
-		{
 			speed_y *= -1;
-		}
-		if (x + radius >= GetScreenWidth() || x - radius <= 0)
+		if (x + radius >= GetScreenWidth())
 		{
-			speed_x *= -1;
+			playerScore++; 
+			ResetBall();
 		}
+		if (x - radius <= 0)
+		{
+			cpuScore++; 
+			ResetBall();
+		}
+	}
+
+	void ResetBall()
+	{
+		x = GetScreenWidth() / 2.f;
+		y = GetScreenHeight() / 2.f;
+		int speed_choices[2] = { -1, 1 };
+		speed_x *= speed_choices[GetRandomValue(0, 1)];
+		speed_y *= speed_choices[GetRandomValue(0, 1)];
 	}
 };
 
@@ -89,8 +105,8 @@ int main()
 	ball.radius = 20.f;
 	ball.x = screenWidth / 2.f;
 	ball.y = screenHeight / 2.f;
-	ball.speed_x = 7;
-	ball.speed_y = 7;
+	ball.speed_x = 8;
+	ball.speed_y = 8;
 
 	player.speed = 6.f;
 	player.width = 25.f;
@@ -133,8 +149,8 @@ int main()
 		player.Draw();
 		cpuPaddle.Draw();
 		DrawFPS(10, 10);
-		DrawText(std::to_string(value).c_str(), screenWidth - 100, 0, 32, WHITE);
-
+		DrawText(TextFormat("%i", playerScore), screenWidth / 4 - 20, 20, 80, WHITE);
+		DrawText(TextFormat("%i", cpuScore), 3 * screenWidth / 4 - 20, 20, 80, WHITE);
 
 		EndDrawing();
 	}
