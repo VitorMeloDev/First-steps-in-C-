@@ -57,7 +57,7 @@ public:
 
 	void Draw()
 	{
-		DrawRectangle(x, y, width, height, WHITE);
+		DrawRectangleRounded(Rectangle{ x, y, width, height}, 0.8f, 0, WHITE);
 	}
 
 	void Update()
@@ -143,7 +143,7 @@ int main()
 		}
 
 		// Drawing
-		ClearBackground(BLACK);
+		ClearBackground(DARKGREEN);
 		DrawLine(screenWidth/2, 0, screenWidth/2, screenHeight, WHITE);
 		ball.Draw();
 		player.Draw();
